@@ -21,13 +21,6 @@ dependencyManagement {
 sourceCompatibility = 11
 targetCompatibility = 11
 
-task srcZip (type: Zip) {
-	
-	classifier = 'src'
-	from projectDir
-	include 'src/**/*'
-	
-}
 
 task construct (dependsOn: ["build", "srcZip"])
 

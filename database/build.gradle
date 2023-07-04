@@ -1,6 +1,7 @@
 plugins {
 	id 'java'
 	id 'org.liquibase.gradle' version '2.0.3'
+	id("maven-publish")
 }
 
 
@@ -11,6 +12,23 @@ repositories {
 dependencies {
 	liquibaseRuntime "org.liquibase:liquibase-core:4.3.5"
 	liquibaseRuntime 'org.postgresql:postgresql:42.2.8'
+}
+
+
+jar {
+	archiveClassifier.set("database")
+	manifest {
+		attributes('Implementation-Title' : 'organizationsdb')
+	}
+
+}
+
+configurations {
+	database
+}
+
+artifacts {
+	database jar
 }
 
 
@@ -52,14 +70,14 @@ liquibase {
 		}
 
 		applySnapshotActivity {
-			changeLogFile '/src/snapshot/changelog.xml'
+			changeLogFile '/src/main/resources/organization/snapshot/changelog.xml'
 			url jdbcProps.get("jdbc.url")
 			username jdbcProps.get("jdbc.username")
 			password jdbcProps.get("jdbc.password")
 		}
 
 		applyChangesActivity {
-			changeLogFile '/src/changes/changelog.xml'
+			changeLogFile '/src/main/resources/organization/changes/changelog.xml'
 			url jdbcProps.get("jdbc.url")
 			username jdbcProps.get("jdbc.username")
 			password jdbcProps.get("jdbc.password")
@@ -70,5 +88,28 @@ liquibase {
 		runList = project.ext.runList
 	} catch (Exception e) {
 		runList = 'noChangeLogActivity'
+	}
+}
+
+
+
+publishing {
+	repositories {
+		maven {
+			name = "GitHubPackages"
+			url = uri("https://maven.pkg.github.com/onbelayconsulting/organizations")
+			credentials {
+				username = project.findProperty("gpr.user") ?: System.getenv("GPR_USER")
+				password = project.findProperty("gpr.key") ?: System.getenv("GPR_TOKEN")
+			}
+		}
+	}
+	publications {
+		organizationdblibrary(MavenPublication) {
+			groupId = 'com.onbelay.organization'
+			artifactId = 'organizationdb'
+			version = System.getenv("SEMANTIC_VERSION") ?: project.findProperty("semantic_version")
+			artifact jar
+		}
 	}
 }
