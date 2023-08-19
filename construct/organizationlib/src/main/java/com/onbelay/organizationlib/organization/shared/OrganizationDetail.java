@@ -8,7 +8,7 @@ import com.onbelay.core.entity.snapshot.AbstractDetail;
 import com.onbelay.core.exception.OBValidationException;
 import com.onbelay.organizationlib.organization.enums.OrganizationErrorCode;
 
-import javax.persistence.Column;
+import jakarta.persistence.Column;
 
 public class OrganizationDetail extends AbstractDetail {
 

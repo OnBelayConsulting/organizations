@@ -10,7 +10,7 @@ import com.onbelay.core.exception.OBValidationException;
 import com.onbelay.organizationlib.organization.shared.OrganizationDetail;
 import com.onbelay.organizationlib.organization.snapshot.OrganizationSnapshot;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "OB_ORGANIZATION")
