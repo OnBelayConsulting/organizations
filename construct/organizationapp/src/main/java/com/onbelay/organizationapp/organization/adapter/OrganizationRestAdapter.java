@@ -5,10 +5,14 @@ import com.onbelay.core.entity.snapshot.TransactionResult;
 import com.onbelay.organizationlib.organization.snapshot.OrganizationSnapshot;
 import com.onbelay.organizationapp.snapshot.OrganizationSnapshotCollection;
 
+import java.util.List;
+
 public interface OrganizationRestAdapter {
 
 
     TransactionResult save(OrganizationSnapshot snapshot);
+
+    TransactionResult save(List<OrganizationSnapshot> snapshots);
 
     OrganizationSnapshotCollection find(String queryText, Integer start, Integer limit);
 

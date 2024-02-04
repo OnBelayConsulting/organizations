@@ -19,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -30,10 +31,8 @@ public class OrganizationRestController extends BaseRestController {
 	@Autowired
 	private OrganizationRestAdapter organizationRestAdapter;
 	
-	
 	@Operation(summary="Create an organization")
-	@RequestMapping(
-			method=RequestMethod.POST,
+	@PostMapping(
 			produces="application/json",
 			consumes="application/json"  )
 
@@ -64,11 +63,44 @@ public class OrganizationRestController extends BaseRestController {
 		}
 		return processResponse(result);
 	}
-	
 
-	
+	@Operation(summary="Create an organization")
+	@PutMapping(
+			produces="application/json",
+			consumes="application/json"  )
+
+	public ResponseEntity<TransactionResult> saveOrganizations(
+			@RequestHeader Map<String, String> headers,
+			@RequestBody List<OrganizationSnapshot> snapshots,
+			BindingResult bindingResult) {
+
+
+		if (bindingResult.getErrorCount() > 0) {
+			logger.error("Errors on create/update FloatIndex PUT");
+			for (ObjectError error : bindingResult.getAllErrors()) {
+				logger.error(error.toString());
+			}
+
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		}
+
+
+		TransactionResult result;
+		try {
+			result = organizationRestAdapter.save(snapshots);
+		} catch (OBRuntimeException p) {
+			result = new TransactionResult(p.getErrorCode(), p.getParms());
+			result.setErrorMessage(errorMessageService.getErrorMessage(p.getErrorCode()));
+		} catch (RuntimeException e) {
+			result = new TransactionResult(e.getMessage());
+		}
+		return processResponse(result);
+	}
+
+
+
 	@Operation(summary="fetch organizations")
-	@RequestMapping(method=RequestMethod.GET, produces = "application/json")
+	@GetMapping(produces = "application/json")
 	public ResponseEntity<OrganizationSnapshotCollection> getOrganizations(
 			@RequestHeader Map<String, String> headers,
 			@RequestParam(value = "query", defaultValue="default") String queryText,
@@ -94,7 +126,7 @@ public class OrganizationRestController extends BaseRestController {
 	}
 
 	@Operation(summary="get an existing organization")
-	@RequestMapping(value="/organizations/{id}", method=RequestMethod.GET)
+	@GetMapping(value="/{id}")
 	public ResponseEntity<OrganizationSnapshot> getOrganization(
 			@PathVariable Integer id) {
 		

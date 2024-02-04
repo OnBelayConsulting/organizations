@@ -25,8 +25,10 @@ public class OrganizationRestAdapterBean extends BaseRestAdapterBean implements 
 
     @Autowired
     private OrganizationService organizationService;
+
     @Override
     public TransactionResult save(OrganizationSnapshot snapshot) {
+        super.initializeSession();
         TransactionResult result = organizationService.save(snapshot);
 
         OrganizationSnapshot created = organizationService.load(result.getEntityId());
@@ -36,12 +38,14 @@ public class OrganizationRestAdapterBean extends BaseRestAdapterBean implements 
         return result;
     }
 
+    @Override
     public TransactionResult save(List<OrganizationSnapshot> snapshots) {
+        super.initializeSession();
 
         initializeSession();
         TransactionResult result = organizationService.save(snapshots);
 
-        List<OrganizationSnapshot>  saved = organizationService.load(result.getEntityIds());
+        List<OrganizationSnapshot>  saved = organizationService.findByIds(new QuerySelectedPage(result.getIds()));
         organizationPublisher.publish(saved);
 
         return result;

@@ -35,8 +35,8 @@ sourceCompatibility = 17
 targetCompatibility = 17
 
 dependencies {
-	implementation group: "com.onbelay.core", name: "obcore", version: "2.1.0"
-	testImplementation group: "com.onbelay.core", name: "obcoretest", version: "2.1.0", classifier: 'tests'
+	implementation group: "com.onbelay.core", name: "obcore", version: "2.2.1"
+	testImplementation group: "com.onbelay.core", name: "obcoretest", version: "2.2.1", classifier: 'tests'
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
 	implementation "com.fasterxml.jackson.core:jackson-core"
@@ -48,7 +48,6 @@ dependencies {
 	implementation group: 'org.postgresql', name: 'postgresql', version: '42.5.1'
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	//testImplementation('org.springframework.security:spring-security-test')
-	testImplementation("org.junit.vintage:junit-vintage-engine")
 	implementation('org.springframework.boot:spring-boot-starter-log4j2')
 
 }

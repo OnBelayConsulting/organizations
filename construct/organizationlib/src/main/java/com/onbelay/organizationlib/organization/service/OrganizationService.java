@@ -20,6 +20,4 @@ public interface OrganizationService {
 	
 	public OrganizationSnapshot load(EntityId entityId);
 
-	public List<OrganizationSnapshot> load(List<EntityId> ids);
-
 }

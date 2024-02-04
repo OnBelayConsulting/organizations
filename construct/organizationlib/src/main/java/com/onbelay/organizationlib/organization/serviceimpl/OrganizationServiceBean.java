@@ -54,19 +54,6 @@ public class OrganizationServiceBean extends BaseDomainService implements Organi
 	}
 
 	@Override
-	public List<OrganizationSnapshot> load(List<EntityId> ids) {
-		QuerySelectedPage selectedPage = new QuerySelectedPage(
-				ids
-						.stream()
-						.map(c-> c.getId())
-						.collect(Collectors.toList()));
-
-		List<Organization> organizations = organizationRepository.fetchByIds(selectedPage);
-		OrganizationSnapshotAssembler assembler = new OrganizationSnapshotAssembler();
-		return assembler.assemble(organizations);
-	}
-
-	@Override
 	public TransactionResult save(OrganizationSnapshot snapshot) {
 
 		Organization organization;
@@ -81,7 +68,7 @@ public class OrganizationServiceBean extends BaseDomainService implements Organi
 				throw new OBRuntimeException(OrganizationErrorCode.MISSING_ORGANIZATION.getCode());
 			organization.updateWith(snapshot);
 		}
-		return new TransactionResult(organization.generateEntityId());
+		return new TransactionResult(organization.getId());
 	}
 
 	@Override
@@ -100,7 +87,7 @@ public class OrganizationServiceBean extends BaseDomainService implements Organi
 				organization = organizationRepository.load(snapshot.getEntityId());
 				organization.updateWith(snapshot);
 			}
-			result.addEntityId(organization.generateEntityId());
+			result.getIds().add(organization.getId());
 			
 		}
 		return result;

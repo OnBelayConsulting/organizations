@@ -12,26 +12,25 @@ import com.onbelay.organizationlib.organization.snapshot.OrganizationSnapshot;
 import com.onbelay.organizationapp.snapshot.OrganizationSnapshotCollection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @WithMockUser
 @ComponentScan("com.onbelay")
-@RunWith(SpringRunner.class)
 @SpringBootTest()
 @TestPropertySource( locations="classpath:application-integrationtest.properties")
 public class OrganizationRestControllerTest extends TransactionalSpringTestCase {
@@ -46,8 +45,8 @@ public class OrganizationRestControllerTest extends TransactionalSpringTestCase 
 	private OrganizationService organizationService;
 
 	@Override
-	public void beforeRun() throws Throwable {
-		super.beforeRun();
+	public void setUp() {
+		super.setUp();
 
 		OrganizationFixture.createOrganizations("y", 30);
 		OrganizationFixture.createOrganizations("m", 4);
@@ -123,7 +122,45 @@ public class OrganizationRestControllerTest extends TransactionalSpringTestCase 
 		assertEquals(myOrganization.getDetail().getShortName(), created.getDetail().getShortName());
 		assertEquals("freddie", created.getDetail().getLegalName());
 	}
-	
+
+
+	@Test
+	public void testPutSave() throws Exception {
+
+		MockMvc mvc = MockMvcBuilders.standaloneSetup(organizationRestController)
+				.build();
+
+		OrganizationSnapshotAssembler assembler = new OrganizationSnapshotAssembler();
+
+		OrganizationSnapshot snapshot = assembler.assemble(myOrganization);
+
+		snapshot.setEntityState(EntityState.MODIFIED);
+		snapshot.getDetail().setLegalName("freddie");
+
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString =  mapper.writeValueAsString(List.of(snapshot));
+
+		ResultActions result = mvc.perform(
+				put("/api/organizations")
+						.accept(MediaType.APPLICATION_JSON)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(jsonString));
+
+		MvcResult mvcResult = result.andReturn();
+
+		String jsonStringResponse = mvcResult.getResponse().getContentAsString();
+
+		logger.error(jsonStringResponse);
+
+		TransactionResult transactionResult = mapper.readValue(jsonStringResponse, TransactionResult.class);
+		assertEquals(true, transactionResult.isSuccessful());
+
+		OrganizationSnapshot created = organizationService.load(transactionResult.getEntityId());
+		assertEquals(myOrganization.getDetail().getShortName(), created.getDetail().getShortName());
+		assertEquals("freddie", created.getDetail().getLegalName());
+	}
+
+
 	@Test
 	public void testPostUpdateWithJson() throws Exception {
 		
@@ -185,7 +222,32 @@ public class OrganizationRestControllerTest extends TransactionalSpringTestCase 
 		
 	}
 
-	
+
+	@Test
+	public void testGetWithId() throws Exception {
+
+		MockMvc mvc = MockMvcBuilders.standaloneSetup(organizationRestController)
+				.build();
+
+
+		ResultActions result = mvc.perform(get("/api/organizations/" + myOrganization.getId()));
+
+		MvcResult mvcResult = result.andReturn();
+
+		String jsonStringResponse = mvcResult.getResponse().getContentAsString();
+
+		logger.error("Json: " + jsonStringResponse);
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		OrganizationSnapshot snapshot = mapper.readValue(jsonStringResponse, OrganizationSnapshot.class);
+
+
+		assertEquals(myOrganization.getDetail().getShortName(), snapshot.getDetail().getShortName());
+
+	}
+
+
 	@Test
 	public void testGetWithQuery() throws Exception {
 		
