@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @WithMockUser
 @ComponentScan("com.onbelay")
 @SpringBootTest()
-@TestPropertySource( locations= "classpath:devoverlays/construct/organizationlib/src/test/resources/application-integrationtest.properties")
+@TestPropertySource( locations= "classpath:application-integrationtest.properties")
 public class OrganizationRestControllerTest extends TransactionalSpringTestCase {
 	private static final Logger logger = LogManager.getLogger(OrganizationRestControllerTest.class);
 	
