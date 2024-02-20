@@ -17,4 +17,6 @@ public interface OrganizationRestAdapter {
     OrganizationSnapshotCollection find(String queryText, Integer start, Integer limit);
 
     OrganizationSnapshot load(EntityId entityId);
+
+    TransactionResult synchronizeOrganizations();
 }

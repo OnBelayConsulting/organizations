@@ -64,6 +64,28 @@ public class OrganizationRestController extends BaseRestController {
 		return processResponse(result);
 	}
 
+	@Operation(summary="Synchronize organizations")
+	@PostMapping(
+			value ="/sync",
+			produces="application/json")
+
+	public ResponseEntity<TransactionResult> synchronizeOrganizations(
+			@RequestHeader Map<String, String> headers) {
+
+
+		TransactionResult result;
+		try {
+			result = organizationRestAdapter.synchronizeOrganizations();
+		} catch (OBRuntimeException p) {
+			result = new TransactionResult(p.getErrorCode(), p.getParms());
+			result.setErrorMessage(errorMessageService.getErrorMessage(p.getErrorCode()));
+		} catch (RuntimeException e) {
+			result = new TransactionResult(e.getMessage());
+		}
+		return processResponse(result);
+	}
+
+
 	@Operation(summary="Create an organization")
 	@PutMapping(
 			produces="application/json",

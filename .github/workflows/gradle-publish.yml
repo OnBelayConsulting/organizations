@@ -73,7 +73,11 @@ jobs:
 
     - name: Copy overlays to support testing
       run: |
-        ./gradlew copyAllOverlays
+        cp ./overlays/database/* ./database
+        rm  -rf ./construct/organizationlib/src/test/resources/*.properties
+        cp ./overlays/construct/organizationlib/src/test/resources/* ./construct/organizationlib/src/test/resources
+        rm -rf  ./construct/organizationapp/src/test/resources/*.properties
+        cp ./overlays/construct/organizationapp/src/test/resources/* ./construct/organizationapp/src/test/resources
 
     - name: list directory
       run: |

@@ -39,6 +39,15 @@ public class OrganizationRestAdapterBean extends BaseRestAdapterBean implements 
     }
 
     @Override
+    public TransactionResult synchronizeOrganizations() {
+
+        QuerySelectedPage selectedPage = organizationService.findOrganizationIds(new DefinedQuery("Organization"));
+        List<OrganizationSnapshot> existing = organizationService.findByIds(selectedPage);
+        organizationPublisher.publish(existing);
+        return new TransactionResult();
+    }
+
+    @Override
     public TransactionResult save(List<OrganizationSnapshot> snapshots) {
         super.initializeSession();
 

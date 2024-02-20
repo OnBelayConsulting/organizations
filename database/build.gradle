@@ -11,6 +11,7 @@ repositories {
 
 dependencies {
 	liquibaseRuntime "org.liquibase:liquibase-core:4.3.5"
+	liquibaseRuntime 'com.microsoft.sqlserver:mssql-jdbc:11.2.3.jre17'
 	liquibaseRuntime 'info.picocli:picocli:4.6.1'
 	liquibaseRuntime 'org.postgresql:postgresql:42.2.8'
 }

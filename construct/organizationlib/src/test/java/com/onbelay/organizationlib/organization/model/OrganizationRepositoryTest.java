@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ComponentScan("com.onbelay")
-@TestPropertySource( locations="classpath:application-integrationtest.properties")
+@TestPropertySource( locations= "classpath:devoverlays/construct/organizationlib/src/test/resources/application-integrationtest.properties")
 @SpringBootTest
 
 public class OrganizationRepositoryTest extends TransactionalSpringTestCase {
