@@ -8,7 +8,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	logicalFilePath="/com/onbelay/organization/snapshot/ddl/constraints/changelog.xml"
 >
+	<include file="BUS_CONTACT_UC.xml" relativeToChangelogFile="true"/>
 	<include file="ORGANIZATION_UC.xml" relativeToChangelogFile="true"/>
+	<include file="FK_CONTACT_TO_CONTACT_STATUS_CODE.xml" relativeToChangelogFile="true"/>
+	<include file="FK_ORGANIZATION_TO_CREDIT_STATUS_CODE.xml" relativeToChangelogFile="true"/>
+	<include file="FK_ORGANIZATION_TO_INDUSTRY_TYPE_CODE.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
 
 

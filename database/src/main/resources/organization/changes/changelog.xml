@@ -14,5 +14,6 @@
 	-->
 	<include file="../now.xml" relativeToChangelogFile="true"/>
 	<include file="../concatenationOperator.xml" relativeToChangelogFile="true"/>
+	<include file="../databasetypes.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

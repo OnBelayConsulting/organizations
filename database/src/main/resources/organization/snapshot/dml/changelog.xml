@@ -8,6 +8,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	logicalFilePath="/com/onbelay/organization/snapshot/dml/changelog.xml"
 >
+	<include file="INDUSTRY_TYPE_CODE_Insert.xml" relativeToChangelogFile="true"/>
+	<include file="CREDIT_STATUS_CODE_Insert.xml" relativeToChangelogFile="true"/>
+	<include file="CONTACT_STATUS_CODE_Insert.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
 
