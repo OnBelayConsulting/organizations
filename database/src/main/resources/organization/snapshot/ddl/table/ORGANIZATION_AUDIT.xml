@@ -26,6 +26,14 @@
       <column name="LEGAL_NAME"  type="java.sql.Types.VARCHAR(100)">
         <constraints nullable="false"/>
       </column>
+      <column name="INDUSTRY_TYPE_CODE"
+         type="java.sql.Types.VARCHAR(32)">
+         <constraints nullable="false"/>
+      </column>
+      <column name="CREDIT_STATUS_CODE"
+         type="java.sql.Types.VARCHAR(32)">
+         <constraints nullable="false"/>
+      </column>
       <column name="EXPIRED_FLG" type="java.sql.Types.CHAR(1)">
         <constraints nullable="false"/>
       </column>
@@ -35,10 +43,10 @@
       <column name="OPTIMISTIC_LOCK_NO" remarks="Version number." defaultValueNumeric="0" type="java.sql.Types.NUMERIC(10, 0)">
         <constraints nullable="false"/>
       </column>
-      <column name="VALID_FROM_DTTM" type="java.sql.Types.TIMESTAMP">
+      <column name="VALID_FROM_DTTM" type="${datetimeDataType}">
         <constraints nullable="false"/>
       </column>
-      <column name="VALID_TO_DTTM" type="java.sql.Types.TIMESTAMP">
+      <column name="VALID_TO_DTTM" type="${datetimeDataType}">
         <constraints nullable="false"/>
       </column>
       <column name="LAST_USER" type="java.sql.Types.VARCHAR(60)">

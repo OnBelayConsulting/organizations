@@ -10,6 +10,8 @@
 >
 	<include file="ORGANIZATION.xml" relativeToChangelogFile="true"/>
 	<include file="ORGANIZATION_AUDIT.xml" relativeToChangelogFile="true"/>
+	<include file="BUSINESS_CONTACT.xml" relativeToChangelogFile="true"/>
+	<include file="BUSINESS_CONTACT_AUDIT.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
 
 

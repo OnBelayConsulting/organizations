@@ -1,0 +1,24 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+	http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+	http://www.liquibase.org/xml/ns/dbchangelog
+	http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        logicalFilePath="/com/onbelay/organizations/snapshot/ddl/FK_CONTACT_TO_CONTACT_STATUS_CODE"
+>
+    <changeSet author="lefeuvrem" id="1.0" objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+
+        <addForeignKeyConstraint
+                baseColumnNames="CONTACT_STATUS_CODE"
+                baseTableName="BUSINESS_CONTACT"
+                constraintName="BUS_CONTACT_FK02"
+                deferrable="false"
+                initiallyDeferred="false"
+                onDelete="RESTRICT"
+                onUpdate="NO ACTION"
+                referencedColumnNames="CODE_ID"
+                referencedTableName="CONTACT_STATUS_CODE"
+        />
+    </changeSet>
+</databaseChangeLog>
