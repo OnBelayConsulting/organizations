@@ -26,6 +26,14 @@
         type="java.sql.Types.VARCHAR(100)">
         <constraints nullable="false"/>
       </column>
+      <column name="INDUSTRY_TYPE_CODE"
+         type="java.sql.Types.VARCHAR(32)">
+         <constraints nullable="false"/>
+      </column>
+      <column name="CREDIT_STATUS_CODE"
+         type="java.sql.Types.VARCHAR(32)">
+         <constraints nullable="false"/>
+      </column>
       <column name="OPTIMISTIC_LOCK_NO"
         type="java.sql.Types.NUMERIC(10, 0)">
         <constraints nullable="false"/>
