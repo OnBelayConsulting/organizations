@@ -4,6 +4,7 @@ import com.onbelay.core.entity.persistence.TransactionalSpringTestCase;
 import com.onbelay.core.query.snapshot.DefinedQuery;
 import com.onbelay.core.query.snapshot.QuerySelectedPage;
 import com.onbelay.organization.organization.repository.OrganizationRepository;
+import com.onbelay.organization.test.OrganizationSpringTestCase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,11 +17,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@ComponentScan("com.onbelay")
-@TestPropertySource( locations= "classpath:application-integrationtest.properties")
-@SpringBootTest
-
-public class OrganizationRepositoryTest extends TransactionalSpringTestCase {
+public class OrganizationRepositoryTest extends OrganizationSpringTestCase {
 
 	@Autowired
 	private OrganizationRepository organizationRepository;
