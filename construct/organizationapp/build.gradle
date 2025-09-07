@@ -35,14 +35,12 @@ repositories {
 
 }
 
-sourceCompatibility = 17
-targetCompatibility = 17
 
 dependencies {
 	implementation project(path: ':construct:organizationlib')
 	testImplementation project(path: ':construct:organizationlib', configuration: 'tests')
-	implementation group: "com.onbelay.core", name: "obcore", version: "2.5.0"
-	testImplementation group: "com.onbelay.core", name: "obcoretest", version: "2.5.0", classifier: 'tests'
+	implementation group: "com.onbelay.core", name: "obcore", version: "2.7.0"
+	testImplementation group: "com.onbelay.core", name: "obcoretest", version: "2.7.0", classifier: 'tests'
 
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation('org.springframework.boot:spring-boot-starter-actuator')
@@ -58,7 +56,7 @@ dependencies {
 	implementation "com.fasterxml.jackson.core:jackson-core"
 	implementation "com.fasterxml.jackson.core:jackson-databind"
 	implementation "com.fasterxml.jackson.datatype:jackson-datatype-json-org"
-	implementation group: "org.apache.commons", name: "commons-lang3", version: "3.12.0"
+	implementation group: "org.apache.commons", name: "commons-lang3", version: '3.18.0'
 	implementation group: "org.apache.commons", name: "commons-collections4", version: "4.4"
 	implementation group: "org.apache.commons", name: "commons-text", version: "1.+"
 
